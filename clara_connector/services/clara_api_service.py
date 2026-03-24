@@ -198,7 +198,7 @@ class ClaraAPIService:
 
     def _paginate(self, endpoint, params, data_key=None, max_records=5000):
         results = []
-        page = 0
+        page = params.get('page', 0)
         while True:
             params['page'] = page
             data = self._make_request('GET', endpoint, params=params)
@@ -250,7 +250,7 @@ class ClaraAPIService:
     # Endpoint Methods
     # ----------------------------------------------------
 
-    def get_transactions(self, from_date=None, to_date=None, status=None, page=1, limit=100, max_records=5000):
+    def get_transactions(self, from_date=None, to_date=None, status=None, page=0, limit=100, max_records=5000):
         params = {"size": limit, "page": page}
         if from_date:
             params["operationDateRangeStart"] = from_date.strftime("%Y-%m-%d")
@@ -264,7 +264,7 @@ class ClaraAPIService:
     def get_transaction(self, uuid):
         return self._make_request('GET', f"/api/v3/transactions/{uuid}")
 
-    def get_cards(self, status=None, page=1, limit=100, max_records=5000):
+    def get_cards(self, status=None, page=0, limit=100, max_records=5000):
         params = {"size": limit, "page": page}
         if status:
             params["status"] = status
@@ -273,17 +273,17 @@ class ClaraAPIService:
     def get_card(self, uuid):
         return self._make_request('GET', f"/api/v3/cards/{uuid}")
 
-    def get_billing_statements(self, page=1, limit=100, max_records=5000):
+    def get_billing_statements(self, page=0, limit=100, max_records=5000):
         params = {"size": limit, "page": page}
         return self._paginate("/api/v3/billing-statements", params, data_key="statements", max_records=max_records)
 
     def get_billing_statement(self, uuid):
         return self._make_request('GET', f"/api/v3/billing-statements/{uuid}")
 
-    def get_statement_transactions(self, statement_uuid, page=1, limit=100, max_records=5000):
+    def get_statement_transactions(self, statement_uuid, page=0, limit=100, max_records=5000):
         params = {"size": limit, "page": page}
         return self._paginate(f"/api/v3/billing-statements/{statement_uuid}/transactions", params, data_key="transactions", max_records=max_records)
 
-    def get_users(self, page=1, limit=100, max_records=5000):
+    def get_users(self, page=0, limit=100, max_records=5000):
         params = {"size": limit, "page": page}
         return self._paginate("/api/v3/users", params, data_key="users", max_records=max_records)

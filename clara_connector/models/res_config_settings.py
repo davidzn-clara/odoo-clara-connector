@@ -46,7 +46,7 @@ class ResConfigSettings(models.TransientModel):
             # Test getting the token implicitly tests certificates and client id/secret
             token = service.get_token()
             # Also test the user scope by making a basic request (paginated, just 1 item)
-            txn = service.get_transactions(limit=1)
+            txn = service.get_transactions(limit=1, max_records=1)
             
             return {
                 'type': 'ir.actions.client',
