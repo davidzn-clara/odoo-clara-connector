@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="clara_connector.DashboardView" owl="1">
+        <div class="o_clara_dashboard container-fluid py-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">Clara Spend Management</h2>
+                <div>
+                    <button class="btn btn-primary me-2" t-on-click="syncNow">
+                        <i class="fa fa-refresh me-1"/> Sync Now
+                    </button>
+                    <button class="btn btn-secondary me-2" t-on-click="openTransactions">Transactions</button>
+                    <button class="btn btn-secondary" t-on-click="openCards">Cards</button>
+                </div>
+            </div>
+
+            <div class="alert mb-4" t-attf-class="alert-{{ state.lastSync.color.includes('success') ? 'success' : (state.lastSync.color.includes('danger') ? 'danger' : 'warning') }}">
+                <i class="fa fa-info-circle me-2"/> Last Sync Status: <strong><t t-esc="state.lastSync.status"/></strong> 
+                (Finished at: <t t-esc="state.lastSync.timestamp"/>)
+            </div>
+
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="text-muted text-uppercase mb-2">Total Spend (This Mth)</h6>
+                            <h2 class="mb-0">$<t t-esc="state.kpi.totalSpend.toFixed(2)"/></h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="text-muted text-uppercase mb-2">Approved Transactions</h6>
+                            <h2 class="mb-0"><t t-esc="state.kpi.approvedCount"/></h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="text-muted text-uppercase mb-2">Pending Expenses</h6>
+                            <h2 class="mb-0 text-warning"><t t-esc="state.kpi.pendingExpensesCount"/></h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h6 class="text-muted text-uppercase mb-2">Unposted Entries</h6>
+                            <h2 class="mb-0 text-info"><t t-esc="state.kpi.unpostedEntriesCount"/></h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title mb-4">Spend by Category (Top 5)</h5>
+                            <ul class="list-group list-group-flush">
+                                <t t-foreach="state.chartData" t-as="item" t-key="item.name">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                        <t t-esc="item.name"/>
+                                        <span class="badge bg-primary rounded-pill">$<t t-esc="item.value.toFixed(2)"/></span>
+                                    </li>
+                                </t>
+                                <t t-if="state.chartData.length === 0">
+                                    <li class="list-group-item px-0 text-muted">No data available for this month.</li>
+                                </t>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+</templates>

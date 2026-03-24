@@ -1,0 +1,21 @@
+version: '3.1'
+services:
+  web:
+    image: odoo:17.0
+    depends_on:
+      - mydb
+    ports:
+      - "8070:8069"
+    volumes:
+      - ./clara_connector:/mnt/extra-addons/clara_connector
+    environment:
+      - HOST=mydb
+      - USER=odoo
+      - PASSWORD=${DB_PASSWORD:-odoo_password}
+
+  mydb:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-odoo_password}
+      - POSTGRES_USER=odoo

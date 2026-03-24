@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_clara" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.clara</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <!-- Create a standalone Clara Connector App section -->
+            <xpath expr="//form" position="inside">
+                <app data-string="Clara Connector" string="Clara Connector" name="clara_connector" logo="/clara_connector/static/description/icon.png">
+                    <block title="Clara Connector" id="clara_connector_settings">
+                    <setting string="Connection">
+                        <div class="content-group">
+                            <div class="mt16">
+                                <label for="clara_country"/>
+                                <field name="clara_country" class="oe_inline"/>
+                            </div>
+                            <div class="mt16">
+                                <label for="clara_client_id"/>
+                                <field name="clara_client_id"/>
+                            </div>
+                            <div class="mt16">
+                                <label for="clara_client_secret"/>
+                                <field name="clara_client_secret" password="True"/>
+                            </div>
+                            <div class="mt16">
+                                <label for="clara_tax_identifier"/>
+                                <field name="clara_tax_identifier"/>
+                            </div>
+                            
+                            <!-- Certificates UI -->
+                            <div class="mt16 bg-light p-3 rounded" style="border: 1px solid #ccc;">
+                                <strong>mTLS Certificates</strong>
+                                <span class="badge text-bg-success ms-2" invisible="not clara_cert_uploaded_date">Valid</span>
+                                <span class="badge text-bg-warning ms-2" invisible="clara_cert_uploaded_date">Missing</span>
+                                
+                                <div class="mt8">
+                                    <label for="clara_ca_cert" string="CA Certificate (.pem)"/>
+                                    <field name="clara_ca_cert" filename="'ca.pem'"/>
+                                </div>
+                                <div class="mt8">
+                                    <label for="clara_client_cert" string="Client Certificate (.crt)"/>
+                                    <field name="clara_client_cert" filename="'cert.crt'"/>
+                                </div>
+                                <div class="mt8">
+                                    <label for="clara_client_key" string="Client Private Key (.key)"/>
+                                    <field name="clara_client_key" filename="'key.key'"/>
+                                </div>
+                                <div class="mt8 text-muted" invisible="not clara_cert_uploaded_date">
+                                    <small>Uploaded On: <field name="clara_cert_uploaded_date" readonly="1"/></small>
+                                </div>
+                            </div>
+                            <div class="mt16">
+                                <button name="action_test_clara_connection" type="object" string="Test Connection" class="btn btn-primary"/>
+                            </div>
+                        </div>
+                    </setting>
+                    
+                    <setting string="Sync Settings">
+                        <div class="content-group">
+                            <div class="mt16">
+                                <label for="clara_sync_interval_hours"/>
+                                <field name="clara_sync_interval_hours" class="oe_inline d-inline-block w-25"/>
+                            </div>
+                            <div class="mt16">
+                                <label for="clara_sync_from_date"/>
+                                <field name="clara_sync_from_date" class="oe_inline d-inline-block w-25"/>
+                            </div>
+                            <div class="mt16">
+                                <field name="clara_auto_create_expenses" class="me-2"/>
+                                <label for="clara_auto_create_expenses"/>
+                            </div>
+                            <div class="mt16">
+                                <field name="clara_auto_post_moves" class="me-2"/>
+                                <label for="clara_auto_post_moves"/>
+                            </div>
+                            <div class="mt16">
+                                <label for="clara_request_timeout"/>
+                                <field name="clara_request_timeout" class="oe_inline d-inline-block w-25"/>
+                            </div>
+                        </div>
+                    </setting>
+                    
+                    <setting string="Accounting Mapping">
+                        <div class="content-group">
+                            <div class="mt16">
+                                <label for="clara_journal_id"/>
+                                <field name="clara_journal_id"/>
+                            </div>
+                            <div class="mt16">
+                                <label for="clara_liability_account_id"/>
+                                <field name="clara_liability_account_id"/>
+                            </div>
+                            <div class="mt16">
+                                <label for="clara_default_expense_account_id"/>
+                                <field name="clara_default_expense_account_id"/>
+                            </div>
+                            <div class="mt16">
+                                <label for="clara_default_product_id"/>
+                                <field name="clara_default_product_id"/>
+                            </div>
+                            <div class="mt16">
+                                <label for="clara_default_employee_id"/>
+                                <field name="clara_default_employee_id"/>
+                            </div>
+                        </div>
+                    </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Base Action for Clara App Configuration menu shortcut -->
+    <record id="action_clara_config_settings" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'clara_connector'}</field>
+    </record>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record model="ir.module.category" id="module_category_clara">
+            <field name="name">Clara Connector</field>
+            <field name="description">User access level for Clara Integrations</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="group_clara_user" model="res.groups">
+            <field name="name">Clara User</field>
+            <field name="category_id" ref="module_category_clara"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">Read-only access to transactions, cards, and logs.</field>
+        </record>
+
+        <record id="group_clara_manager" model="res.groups">
+            <field name="name">Clara Manager</field>
+            <field name="category_id" ref="module_category_clara"/>
+            <field name="implied_ids" eval="[(4, ref('clara_connector.group_clara_user'))]"/>
+            <field name="comment">Full access to sync, post expenses, and configure Clara settings.</field>
+        </record>
+
+        <!-- System managers get Clara Manager rights automatically -->
+        <record id="base.group_system" model="res.groups">
+            <field name="implied_ids" eval="[(4, ref('clara_connector.group_clara_manager'))]"/>
+        </record>
+    </data>
+</odoo>

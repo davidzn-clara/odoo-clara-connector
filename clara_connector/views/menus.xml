@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Top Level Menu -->
+    <!-- We'll attach it underneath standard Odoo web_icon syntax -->
+    <menuitem id="menu_clara_root" name="Clara" web_icon="clara_connector,static/description/icon.png" sequence="50"/>
+
+    <!-- Dashboard -->
+    <menuitem id="menu_clara_dashboard" name="Dashboard" parent="menu_clara_root" action="action_clara_dashboard" sequence="10"/>
+
+    <!-- Transactions -->
+    <menuitem id="menu_clara_transactions_main" name="Transactions" parent="menu_clara_root" sequence="20"/>
+    <menuitem id="menu_clara_all_transactions" name="All Transactions" parent="menu_clara_transactions_main" action="action_clara_transactions" sequence="10"/>
+    <menuitem id="menu_clara_pending_transactions" name="Pending Review" parent="menu_clara_transactions_main" action="action_clara_transactions_pending" sequence="20"/>
+
+    <!-- Cards -->
+    <menuitem id="menu_clara_cards" name="Cards" parent="menu_clara_root" action="action_clara_cards" sequence="30"/>
+
+    <!-- Sync Logs -->
+    <menuitem id="menu_clara_sync_logs" name="Sync Logs" parent="menu_clara_root" action="action_clara_sync_logs" sequence="50"/>
+
+    <!-- Configuration -->
+    <menuitem id="menu_clara_configuration" name="Configuration" parent="menu_clara_root" sequence="100"/>
+    <menuitem id="menu_clara_settings" name="Settings" parent="menu_clara_configuration" action="action_clara_config_settings" sequence="10"/>
+</odoo>

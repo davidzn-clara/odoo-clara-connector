@@ -1,0 +1,13 @@
+.o_clara_dashboard {
+    background-color: #f9fafb;
+    min-height: 100vh;
+}
+
+.o_clara_dashboard .card {
+    border-radius: 0.5rem;
+    transition: transform 0.2s ease-in-out;
+}
+
+.o_clara_dashboard .card:hover {
+    transform: translateY(-2px);
+}
