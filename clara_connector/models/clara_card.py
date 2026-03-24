@@ -18,7 +18,14 @@ class ClaraCard(models.Model):
         ('2', 'Virtual'),
         ('3', 'Single-use')
     ], string="Type")
-    status = fields.Char("Status")
+    status = fields.Selection([
+        ('active', 'Active'),
+        ('locked', 'Locked'),
+        ('master_locked', 'Master Locked'),
+        ('cancelled', 'Cancelled'),
+        ('clara_blocked', 'Clara Blocked'),
+        ('closed', 'Closed')
+    ], string="Status", default='active')
     credit_limit = fields.Monetary("Credit Limit", currency_field='currency_id')
     available_balance = fields.Monetary("Available Balance", currency_field='currency_id')
     currency_id = fields.Many2one('res.currency')

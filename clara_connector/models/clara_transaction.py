@@ -25,7 +25,12 @@ class ClaraTransaction(models.Model):
     cardholder_email = fields.Char("Cardholder Email")
     transaction_date = fields.Date("Transaction Date")
     posting_date = fields.Date("Posting Date")
-    status = fields.Char("Status")
+    status = fields.Selection([
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('declined', 'Declined'),
+        ('reversed', 'Reversed')
+    ], string="Status", default='pending')
     description = fields.Text("Description")
     billing_statement_uuid = fields.Char("Billing Statement UUID")
     expense_id = fields.Many2one('hr.expense', string="Expense Record")
