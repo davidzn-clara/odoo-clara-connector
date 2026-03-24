@@ -18,4 +18,6 @@ Follow these steps exactly to execute your first sync:
 - **Sync Now**: Navigate to the Clara application on the top bar. Press `Sync Now` to manually fetch the transactions via the pop-up Wizard. You can view progress logs under the **Sync Logs** menu.
 
 ## Support
-Built internally by the Clara Solutions Engineering Team.
+
+- For bugs or feature requests, open an issue on [GitHub](https://github.com/clara-com/odoo-connector/issues).
+- For questions about your Clara API credentials or certificates, contact [Clara support](https://clara.com).
