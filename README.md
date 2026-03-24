@@ -67,11 +67,15 @@ See the [module README](clara_connector/README.md) for the full configuration ch
 
 ## Screenshots
 
-> Add screenshots of the Dashboard, Transaction list, Card kanban, and Settings views once installed.
-
-| **Dashboard** | **Settings** |
+| **Dashboard** | **Transactions** |
 | :---: | :---: |
-| *Spend KPIs and sync status* | *API credentials and accounting mapping* |
+| ![Dashboard](clara_connector/static/description/dashboard.png) | ![Transactions](clara_connector/static/description/transactions.png) |
+| *Spend KPIs, sync status, and category breakdown* | *Full transaction list with status, merchant, and cardholder* |
+
+| **Cards** | **Settings** |
+| :---: | :---: |
+| ![Cards](clara_connector/static/description/cards.png) | ![Settings](clara_connector/static/description/settings.png) |
+| *Corporate card kanban grouped by status* | *API credentials, certificates, and accounting mapping* |
 
 ## Project Structure
 
