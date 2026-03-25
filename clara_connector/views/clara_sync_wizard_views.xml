@@ -9,8 +9,8 @@
                     <field name="sync_type" widget="radio"/>
                 </group>
                 <footer>
-                    <button name="action_run_sync" type="object" string="Run Sync Now" class="btn-primary"/>
-                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    <button name="action_run_sync" type="object" string="Run Sync Now" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
                 </footer>
             </form>
         </field>

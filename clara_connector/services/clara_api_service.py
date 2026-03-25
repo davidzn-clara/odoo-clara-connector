@@ -185,6 +185,26 @@ class ClaraAPIService:
             try:
                 resp_json = response.json()
                 _logger.info("Clara API Response [%s %s]: %s", method, endpoint, str(resp_json)[:500])
+                
+                # Debug: Write last response to file for inspection
+                try:
+                    import os
+                    # Get the directory where THIS file is located (clara_api_service.py is in services/)
+                    service_dir = os.path.dirname(os.path.abspath(__file__))
+                    # Go up one level to the module root (clara_connector/)
+                    module_root = os.path.dirname(service_dir)
+                    debug_file = os.path.join(module_root, 'clara_last_response.json')
+                    
+                    with open(debug_file, 'w') as f:
+                        json.dump({
+                            'endpoint': endpoint,
+                            'method': method,
+                            'timestamp': datetime.now().isoformat(),
+                            'payload': resp_json
+                        }, f, indent=2)
+                except Exception as ef:
+                    _logger.warning("Failed to write debug file: %s", ef)
+                    
                 return resp_json
             except ValueError:
                 _logger.info("Clara API Response [%s %s]: %s", method, endpoint, response.text[:500])
@@ -268,7 +288,8 @@ class ClaraAPIService:
         params = {"size": limit, "page": page}
         if status:
             params["status"] = status
-        return self._paginate("/api/v3/cards", params, data_key="cards", max_records=max_records)
+        # API v3 uses 'content' for list mapping
+        return self._paginate("/api/v3/cards", params, data_key="content", max_records=max_records)
 
     def get_card(self, uuid):
         return self._make_request('GET', f"/api/v3/cards/{uuid}")

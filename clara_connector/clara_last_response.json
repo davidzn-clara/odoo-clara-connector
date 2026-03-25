@@ -1,0 +1,33 @@
+{
+  "endpoint": "/api/v3/cards",
+  "method": "GET",
+  "timestamp": "2026-03-25T22:52:34.890830",
+  "payload": {
+    "content": [],
+    "pageable": {
+      "pageNumber": 1,
+      "pageSize": 100,
+      "sort": {
+        "sorted": true,
+        "unsorted": false,
+        "empty": false
+      },
+      "offset": 100,
+      "paged": true,
+      "unpaged": false
+    },
+    "totalElements": 87,
+    "totalPages": 1,
+    "last": true,
+    "numberOfElements": 0,
+    "sort": {
+      "sorted": true,
+      "unsorted": false,
+      "empty": false
+    },
+    "size": 100,
+    "number": 1,
+    "first": false,
+    "empty": true
+  }
+}

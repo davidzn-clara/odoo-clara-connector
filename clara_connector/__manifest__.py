@@ -2,7 +2,7 @@
 
 {
     'name': 'Clara – Spend Management Integration',
-    'version': '17.0.1.0.0',
+    'version': '17.0.1.0.3',
     'category': 'Accounting/Localizations',
     'summary': 'Integrate Clara Corporate Cards and Expenses with Odoo Accounts',
     'description': """

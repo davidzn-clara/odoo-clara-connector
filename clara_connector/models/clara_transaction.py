@@ -25,12 +25,14 @@ class ClaraTransaction(models.Model):
     cardholder_email = fields.Char("Cardholder Email")
     transaction_date = fields.Date("Transaction Date")
     posting_date = fields.Date("Posting Date")
-    status = fields.Selection([
+    status = fields.Selection(selection=[
         ('pending', 'Pending'),
         ('approved', 'Approved'),
         ('declined', 'Declined'),
-        ('reversed', 'Reversed')
-    ], string="Status", default='pending')
+        ('reversed', 'Reversed'),
+        ('inactive', 'Inactive'),
+        ('blocked', 'Blocked')
+    ], string="Status", default='pending', tracking=True, help="Transaction processing status")
     description = fields.Text("Description")
     billing_statement_uuid = fields.Char("Billing Statement UUID")
     expense_id = fields.Many2one('hr.expense', string="Expense Record")
@@ -208,21 +210,31 @@ class ClaraTransaction(models.Model):
                         'last_sync_date': fields.Datetime.now()
                     }
                     
-                    existing = self.search([('clara_uuid', '=', uuid_val)], limit=1)
-                    if existing:
-                        existing.write(vals)
-                        updated += 1
-                        tx = existing
-                    else:
-                        tx = self.create(vals)
-                        created += 1
-                        
-                    if tx.status == 'approved' and auto_expense and not tx.expense_id:
-                        tx.action_create_expense()
-                        
-                    if not tx.account_move_id and config.get_param('clara_connector.clara_auto_post_moves', 'False') == 'True':
-                        tx.action_post_journal_entry()
-                        
+                    # Use a savepoint to prevent one failure from aborting the whole transaction
+                    try:
+                        with self.env.cr.savepoint():
+                            existing = self.search([('clara_uuid', '=', uuid_val)], limit=1)
+                            if existing:
+                                existing.write(vals)
+                                updated += 1
+                                tx = existing
+                            else:
+                                tx = self.create(vals)
+                                created += 1
+                                
+                            if tx.status == 'approved' and auto_expense and not tx.expense_id:
+                                tx.action_create_expense()
+                                
+                            if not tx.account_move_id and config.get_param('clara_connector.clara_auto_post_moves', 'False') == 'True':
+                                tx.action_post_journal_entry()
+                            
+                            # Force a flush inside the savepoint to catch any SQL errors here
+                            tx.flush_recordset()
+                    except Exception as db_ex:
+                        # Invalidate cache for this record to prevent Odoo from trying to flush it again later
+                        self.env.invalidate_all()
+                        raise db_ex
+                            
                 except Exception as ex:
                     _logger.error("Failed to sync transaction %s: %s", item.get('id'), str(ex))
                     errored += 1
