@@ -1,33 +1,33 @@
 {
-  "endpoint": "/api/v3/cards",
+  "endpoint": "/api/v3/transactions",
   "method": "GET",
-  "timestamp": "2026-03-25T22:52:34.890830",
+  "timestamp": "2026-03-26T14:51:27.515093",
   "payload": {
     "content": [],
     "pageable": {
-      "pageNumber": 1,
+      "pageNumber": 0,
       "pageSize": 100,
       "sort": {
+        "empty": false,
         "sorted": true,
-        "unsorted": false,
-        "empty": false
+        "unsorted": false
       },
-      "offset": 100,
+      "offset": 0,
       "paged": true,
       "unpaged": false
     },
-    "totalElements": 87,
-    "totalPages": 1,
     "last": true,
-    "numberOfElements": 0,
+    "totalElements": 0,
+    "totalPages": 0,
     "sort": {
+      "empty": false,
       "sorted": true,
-      "unsorted": false,
-      "empty": false
+      "unsorted": false
     },
+    "first": true,
     "size": 100,
-    "number": 1,
-    "first": false,
+    "number": 0,
+    "numberOfElements": 0,
     "empty": true
   }
 }
