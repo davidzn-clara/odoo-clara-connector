@@ -308,3 +308,14 @@ class ClaraAPIService:
     def get_users(self, page=0, limit=100, max_records=5000):
         params = {"size": limit, "page": page}
         return self._paginate("/api/v3/users", params, data_key="users", max_records=max_records)
+
+    def get_invoices(self, from_date=None, to_date=None, page=0, limit=100, max_records=5000):
+        params = {"size": limit, "page": page}
+        if from_date:
+            params["dateStart"] = from_date.strftime("%Y-%m-%d")
+        if to_date:
+            params["dateEnd"] = to_date.strftime("%Y-%m-%d")
+        return self._paginate("/api/v3/invoices", params, data_key="content", max_records=max_records)
+
+    def get_transaction_invoices(self, transaction_uuid):
+        return self._make_request('GET', f"/api/v3/transactions/{transaction_uuid}/invoices")

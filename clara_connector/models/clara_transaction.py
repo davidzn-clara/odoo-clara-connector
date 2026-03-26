@@ -42,6 +42,7 @@ class ClaraTransaction(models.Model):
         ('synced', 'Synced'),
         ('error', 'Error')
     ], string="Sync State", default='new')
+    invoice_ids = fields.One2many('clara.invoice', 'transaction_id', string="Fiscal Invoices")
     raw_payload = fields.Text("Raw Payload")
     last_sync_date = fields.Datetime("Last Sync Date")
 

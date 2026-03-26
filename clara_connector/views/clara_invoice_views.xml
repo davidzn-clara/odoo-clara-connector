@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_clara_invoice_tree" model="ir.ui.view">
+        <field name="name">clara.invoice.tree</field>
+        <field name="model">clara.invoice</field>
+        <field name="arch" type="xml">
+            <tree string="Recovered Invoices" decoration-muted="status == 'cancelled'">
+                <field name="date"/>
+                <field name="issuer_name"/>
+                <field name="issuer_rfc"/>
+                <field name="name"/>
+                <field name="sat_uuid"/>
+                <field name="amount_total" sum="Total Amount"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="status" widget="badge" decoration-success="status == 'valid'" decoration-danger="status == 'cancelled'"/>
+                <field name="transaction_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_clara_invoice_filter" model="ir.ui.view">
+        <field name="name">clara.invoice.search</field>
+        <field name="model">clara.invoice</field>
+        <field name="arch" type="xml">
+            <search string="Search Invoices">
+                <field name="name" string="Invoice/UUID" filter_domain="['|', '|', ('name', 'ilike', self), ('sat_uuid', 'ilike', self), ('clara_uuid', 'ilike', self)]"/>
+                <field name="issuer_name"/>
+                <field name="issuer_rfc"/>
+                <separator/>
+                <filter string="Valid" name="valid" domain="[('status', '=', 'valid')]"/>
+                <filter string="Cancelled" name="cancelled" domain="[('status', '=', 'cancelled')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Issuer" name="group_issuer" context="{'group_by': 'issuer_name'}"/>
+                    <filter string="Date" name="group_date" context="{'group_by': 'date'}"/>
+                    <filter string="Status" name="group_status" context="{'group_by': 'status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_clara_invoice_form" model="ir.ui.view">
+        <field name="name">clara.invoice.form</field>
+        <field name="model">clara.invoice</field>
+        <field name="arch" type="xml">
+            <form string="Recovered Invoice">
+                <header>
+                    <field name="status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" string="Invoice Number"/>
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group string="Fiscal Data">
+                            <field name="sat_uuid" readonly="1"/>
+                            <field name="date" readonly="1"/>
+                            <field name="amount_total" readonly="1"/>
+                            <field name="currency_id" readonly="1"/>
+                        </group>
+                        <group string="Issuer Information">
+                            <field name="issuer_name" readonly="1"/>
+                            <field name="issuer_rfc" readonly="1"/>
+                            <field name="receiver_rfc" readonly="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Relationships">
+                            <group>
+                                <field name="transaction_id" readonly="1"/>
+                                <field name="clara_uuid" readonly="1" groups="base.group_no_one"/>
+                            </group>
+                        </page>
+                        <page string="Technical" groups="base.group_no_one">
+                            <group>
+                                <field name="raw_payload" readonly="1" widget="ace" options="{'mode': 'python'}"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_clara_invoices" model="ir.actions.act_window">
+        <field name="name">Recovered Invoices</field>
+        <field name="res_model">clara.invoice</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_clara_invoice_filter"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                No invoices recovered yet
+            </p>
+            <p>
+                Run a synchronization to fetch fiscal invoices (CFDIs) recovered by Clara from the SAT.
+            </p>
+        </field>
+    </record>
+</odoo>

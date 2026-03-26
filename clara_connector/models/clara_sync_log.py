@@ -10,6 +10,7 @@ class ClaraSyncLog(models.Model):
     sync_type = fields.Selection([
         ('transactions', 'Transactions'),
         ('cards', 'Cards'),
+        ('invoices', 'Recovered Invoices'),
         ('billing_statements', 'Billing Statements'),
         ('full', 'Full Sync')
     ], string="Sync Type", required=True)

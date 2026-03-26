@@ -15,6 +15,9 @@
     <!-- Cards -->
     <menuitem id="menu_clara_cards" name="Cards" parent="menu_clara_root" action="action_clara_cards" sequence="30"/>
 
+    <!-- Invoices -->
+    <menuitem id="menu_clara_invoices" name="Invoices" parent="menu_clara_root" action="action_clara_invoices" groups="group_clara_user" sequence="40"/>
+
     <!-- Sync Logs -->
     <menuitem id="menu_clara_sync_logs" name="Sync Logs" parent="menu_clara_root" action="action_clara_sync_logs" sequence="50"/>
 

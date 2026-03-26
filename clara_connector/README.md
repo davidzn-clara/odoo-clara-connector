@@ -11,6 +11,11 @@ The **Clara Odoo Connector** provides a seamless, secure, and robust integration
 - **Dynamic Limits**: Tracks **Periodicity** (Daily, Monthly, etc.) and individual **Thresholds** directly from the Clara API v3.
 - **Employee Mapping**: Automatically links Clara cards to Odoo `hr.employee` records based on cardholder names.
 
+### 🔹 Fiscal Invoice Recovery (Mexico)
+- **SAT Synchronization**: Recovers official fiscal documents (CFDI) directly from Clara's integration with the SAT.
+- **Automatic Linking**: Automatically associates recovered XML/PDF metadata with the corresponding Clara transactions in Odoo.
+- **Fiscal Metadata**: Captures SAT UUID, Issuer RFC, and total amounts for easier reconciliation.
+
 ### 🔹 Transaction Synchronization
 - **Real-Time Data**: Syncs all corporate spend transactions, including merchant details, amounts, and currencies.
 - **Automated Logging**: Tracks every sync session with detailed success/failure logs.
@@ -51,17 +56,22 @@ The **Clara Odoo Connector** provides a seamless, secure, and robust integration
 ### Manual Synchronization
 You can trigger a manual sync at any time:
 1. Go to **Clara** > **Sync** > **Manual Sync**.
-2. Choose your scope: **Transactions Only**, **Cards Only**, or **Full Sync**.
+2. Choose your scope: **Transactions Only**, **Cards Only**, **Recovered Invoices Only**, or **Full Sync**.
 3. Press **Run Sync Now**.
 
 ### Automated Sync (Cron)
 The module includes a scheduled action that runs automatically (default: every 4 hours). You can adjust this in Odoo's **Scheduled Actions** menu.
 
+### Invoice Management
+Browse your recovered fiscal documents by navigating to **Clara** > **Invoices**. 
+- Each record displays the official **SAT UUID** and **Issuer RFC**.
+- Linked transactions can be accessed directly from the invoice form view.
+
 ### Card Details View
 Each card record contains:
 - **Limits**: Shows the `Credit Limit` and the effective `Threshold`.
 - **Status**: Visual indicators (Active, Locked, Cancelled) matching Clara's system.
-- **Technical Tab**: For administrators, it includes the `Raw Payload` from the last API response for easier debugging.
+- **Technical Tab**: For administrators, it includes the `Raw Payload` from the last API response.
 
 ---
 

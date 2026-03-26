@@ -8,7 +8,8 @@ class ClaraSyncWizard(models.TransientModel):
     sync_type = fields.Selection([
         ('transactions', 'Transactions Only'),
         ('cards', 'Cards Only'),
-        ('full', 'Full Sync (Transactions & Cards)')
+        ('invoices', 'Recovered Invoices Only'),
+        ('full', 'Full Sync (All Records)')
     ], string="Sync Scope", default='full', required=True)
 
     def action_run_sync(self):
@@ -19,6 +20,9 @@ class ClaraSyncWizard(models.TransientModel):
             
         if self.sync_type in ('cards', 'full'):
             self.env['clara.card']._run_card_sync(triggered_by='manual')
+
+        if self.sync_type in ('invoices', 'full'):
+            self.env['clara.invoice']._run_invoice_sync(triggered_by='manual')
 
         return {
             'type': 'ir.actions.client',

@@ -2,9 +2,9 @@
 
 {
     'name': 'Clara – Spend Management Integration',
-    'version': '17.0.1.0.3',
+    'version': '17.0.1.0.5',
     'category': 'Accounting/Localizations',
-    'summary': 'Integrate Clara Corporate Cards and Expenses with Odoo Accounts',
+    'summary': 'Integrate Clara Corporate Cards, Expenses and Invoice Recovery (CFDI) with Odoo',
     'description': """
 Clara Connector
 ===============
@@ -43,6 +43,7 @@ Check Clara's Developer Documentation for details: https://clara-api.readme.io/d
         'data/ir_cron.xml',
         'views/clara_transaction_views.xml',
         'views/clara_card_views.xml',
+        'views/clara_invoice_views.xml',
         'views/clara_sync_log_views.xml',
         'views/res_config_settings_views.xml',
         'views/clara_dashboard.xml',
