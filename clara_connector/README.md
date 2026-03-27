@@ -1,5 +1,9 @@
 # Clara Connector for Odoo
 
+> [!WARNING]
+> **THIS IS A TEMPLATE PROJECT**. 
+> This repository is intended to be **FORKED** and customized for your specific Odoo environment. **Do not use this repository directly** in production without first forking it to your own organization or account to maintain control over your own configuration, certificates, and updates.
+
 The **Clara Odoo Connector** provides a seamless, secure, and robust integration between Odoo (v17+) and the Clara Spend Management ecosystem. It is designed to bridge the gap between corporate spend and accounting, ensuring all card data and transactions are synchronized in real-time.
 
 ---
@@ -29,23 +33,38 @@ The **Clara Odoo Connector** provides a seamless, secure, and robust integration
 
 ## 🛠 Installation & Setup
 
-### 1. Requirements
+### 1. Module Deployment (Forked Workflow)
+1. **Fork the repository**: Click the **Fork** button on the top right of this GitHub repository to create your own private or organization-level copy.
+2. **Clone your fork**: Clone **your forked version** into your Odoo `addons` directory:
+   ```bash
+   git clone https://github.com/YOUR_ORG/odoo-connector.git
+   ```
+3. **Update Addons Path**: Ensure the directory is included in your `odoo.conf` file:
+   ```ini
+   addons_path = /path/to/odoo/addons,/path/to/clara-connector
+   ```
+4. **Restart Odoo**: Restart your Odoo server to detect the new module.
+5. **Enable Developer Mode**: In Odoo, go to **Settings** and click **Activate the developer mode**.
+6. **Update Apps List**: Navigate to the **Apps** menu and click **Update Apps List** in the top bar.
+7. **Install**: Search for "Clara" and click **Install**.
+
+### 2. Requirements
 - Odoo 17.0+ (Community or Enterprise).
 - Modules: `account`, `hr_expense`.
 
-### 2. Basic Configuration
+### 3. Basic Configuration
 1. Navigate to **Settings** > **Accounting** > **Clara Connector**.
 2. Select your **Region** (MX, CO, BR, etc.).
 3. Enter your **Client ID** and **Client Secret** provided by Clara.
 
-### 3. mTLS Certificate Setup
+### 4. mTLS Certificate Setup
 > [!IMPORTANT]
 > To ensure a secure connection, you must upload your Clara-issued certificates in the **Certificates** tab of the configuration page.
 - **CA Certificate**: Your root/intermediate certificate.
 - **Client Certificate**: Your individual service certificate.
 - **Client Key**: The private key associated with your certificate.
 
-### 4. Verification
+### 5. Verification
 - Press the **Test Connection** button.
 - A **Success** notification indicates Odoo is now communicating with Clara's Public API v3.
 
